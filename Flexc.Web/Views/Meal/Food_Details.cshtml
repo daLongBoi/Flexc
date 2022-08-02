@@ -1,0 +1,35 @@
+  @model Food
+
+<!-- Breadcrumbs using partial view -->
+<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/Mot", "Mots"), ("","Close") })>
+    
+<div class="col card rounded shadow-lg p-4">
+
+    <h3 class=" mt-4 mb-4">Mot Details</h3>
+
+    <dl class="row">       
+        <dt class="col-4">Id</dt>
+        <dd class="col-8">@Model.Id</dd>
+
+        <dt class="col-4">Name</dt>
+        <dd class="col-8">@Model.Name</dd>
+
+        <dt class="col-4">Weight</dt>
+        <dd class="col-8">@Model.Weight</dd>
+     
+        <dt class="col-4">Calories</dt>
+        <dd class="col-8">@Model.Calories</dd>
+         
+        <dt class="col-4"> FoodPhotoUrl</dt>
+        <dd class="col-8">@Model.FoodPhotoUrl</dd>
+      
+    </dl>
+
+    <div class="mt-4">           
+        <a class="btn btn-link" asp-action="Index">Cancel</a>
+    </div>
+
+</div> 
+
+<partial name="_CloseModal"/>
+ 
