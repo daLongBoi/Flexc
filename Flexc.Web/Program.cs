@@ -1,8 +1,13 @@
 using Flexc.Web;
 using Flexc.Core.Services;
 using Flexc.Data.Services;
+using Flexc.Web.Hubs;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // ** Add Cookie Authentication via extension method **
 builder.Services.AddCookieAuthentication();
@@ -15,6 +20,9 @@ builder.Services.AddHttpContextAccessor();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSignalR();
+
 
 var app = builder.Build();
 
@@ -42,6 +50,10 @@ app.UseRouting();
 // ** turn on authentication/authorisation **
 app.UseAuthentication();
 app.UseAuthorization();
+
+
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.MapControllerRoute(
     name: "default",

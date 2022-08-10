@@ -17,6 +17,8 @@ namespace Flexc.Core.Models
 
         public int Sets {get;set;}
 
+        public int Weight {get;set;}
+
         public string ExPhotoUrl {get; set;}
 
     

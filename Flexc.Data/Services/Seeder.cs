@@ -33,8 +33,26 @@ namespace Flexc.Data.Services
             var f6 = svc.CreateFood(m2.Id,"Tomato",100,100,"url");
             var f7 = svc.CreateFood(m2.Id,"Tomato",100,100,"url");
             var f8 = svc.CreateFood(m3.Id,"Tomato",100,100,"url");
+            
+
+            
+            var w1 =  svc.AddWorkout(1,"Arms","pt name",DateTime.Today);
+            var w2 = svc.AddWorkout(2,"Back - biceps","pt name",DateTime.Today.AddDays(-1));
+            var w3 =  svc.AddWorkout(3,"Chest - triceps","pt name",DateTime.Today.AddDays(-2));
+            var w4 =  svc.AddWorkout(4,"Legs","pt name",DateTime.Today.AddDays(-3));
+            var w5 =  svc.AddWorkout(5,"shoulders","pt name",DateTime.Today.AddDays(-4));
+            var w =  svc.AddWorkout(5,"Cardio","pt name",DateTime.Today.AddDays(-4));
 
 
+            var e1 = svc.CreateExersize(m1.Id,"Preacher curl","Bicep",10,4,30,"url");
+            var e2 = svc.CreateExersize(m1.Id,"Dumbell curl","Bicep",10,4,12,"url");
+            var e3 = svc.CreateExersize(m1.Id,"Hammer curl","Bicep",10,4,14,"url");
+            var e4 = svc.CreateExersize(m1.Id,"Consentration curl","Bicep",10,4,20,"url");
+
+            var e6 = svc.CreateExersize(m1.Id,"Skull crushers","Tricep",10,4,40,"url");
+            var e7 = svc.CreateExersize(m1.Id,"Close grip Bench Press","Tricep",10,4,36,"url");
+            var e8 = svc.CreateExersize(m1.Id,"Overhead Rope pulls","Tricep",10,4,30,"url");
+            var e9 = svc.CreateExersize(m1.Id,"Tricep pulldown","Tricep",10,4,20,"url");
         }
     }
 }

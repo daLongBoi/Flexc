@@ -24,11 +24,11 @@
         </dl>
         <div class="mt-4">
     <!-- add navigation link to redirect to Index action -->
-    <a asp-controller="Vehicle" asp-action="Index" class="btn btn-sm btn-primary" role="button">Home</a>
+    <a asp-controller="Meal" asp-action="Index" class="btn btn-sm btn-primary" role="button">Home</a>
     <!-- add navigation link to Details action, passing the correct route id parameter --> 
     <a asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager") || User.IsInRole("user")) asp-controller="Meal" asp-action="Edit" asp-route-id ="@Model.Id" class="btn btn-sm btn-secondary" role="button">Edit</a>
     <!--add navigation link to create New Mot Record -->
-    <a asp-controller="Vehicle" asp-action=FoodCreate asp-route-id="@Model.Id" class="btn btn-sm btn-secondary"> Add Food Item </a>
+    <a asp-controller="Meal" asp-action=FoodCreate asp-route-id="@Model.Id" class="btn btn-sm btn-secondary"> Add Food Item </a>
 
      <!-- add navigation link to Delete action, passing the correct route id parameter --> 
      <a asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager") || User.IsInRole("user")) asp-controller="Meal" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>Delete</a>

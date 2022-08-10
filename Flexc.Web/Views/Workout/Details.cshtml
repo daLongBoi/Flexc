@@ -1,0 +1,82 @@
+@model Workout
+<partial name="_BreadCrumbs" model=@(new [] {
+    ("/", "Home"),("/Workout", "Workout"),
+    ("", "Details")
+})/>
+    
+<h3 class="callout callout-info mt-4 mb-4">Workout Details</h3>
+<div class="row">
+    <!-- Details -->
+    <div class="col-8 card rounded shadow p-3">
+        <dl class="row">       
+            <dt class="col-5">Id</dt>
+            <dd class="col-7">@Model.Id</dd>
+
+             <dt class="col-5">Name</dt>
+            <dd class="col-7">@Model.Name</dd>
+
+            <dt class="col-5">Creator</dt>
+            <dd class="col-7">@Model.Creator</dd>
+            
+            <dt class="col-5">Date of Workout</dt>
+            <dd class="col-7">@Model.DateWorkout</dd>
+            
+        </dl>
+        <div class="mt-4">
+    <!-- add navigation link to redirect to Index action -->
+    <a asp-controller="Workout" asp-action="Index" class="btn btn-sm btn-primary" role="button">Home</a>
+    <!-- add navigation link to Details action, passing the correct route id parameter --> 
+    <a asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager") || User.IsInRole("user")) asp-controller="Workout" asp-action="Edit" asp-route-id ="@Model.Id" class="btn btn-sm btn-secondary" role="button">Edit</a>
+    <!--add navigation link to create New Mot Record -->
+    <a asp-controller="Workout" asp-action=ExersizeCreate asp-route-id="@Model.Id" class="btn btn-sm btn-secondary"> Add Food Item </a>
+
+     <!-- add navigation link to Delete action, passing the correct route id parameter --> 
+     <a asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager") || User.IsInRole("user")) asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>Delete</a>
+        
+   
+    
+
+<!-- Mot partial -->
+@if (Model.Exersizes.Count > 0)
+{
+<div class="row mt-4 p-3" >
+    <table class="table table-sm mt-4">
+    <thead>
+            <tr>
+                <th>MealId</th>
+                <th>Name</th>
+                <th>Weight</th>
+                <th>Calories</th>
+            
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model.Exersizes) 
+            {
+                
+                <tr>
+                    <td>@m.workoutID</td>
+                    <td>@m.ExName</td>
+                    <td>@m.MuscleGroup</td>
+                    <td>@m.Reps</td>
+                    <td>@m.Sets</td>
+                    <td><img src="@m.ExPhotoUrl" class="img-fluid"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}
+else 
+{
+<div class="row">
+    <div class="col-8 card rounded shadow pt-3"> 
+        <b>No Mot Record currently</b>
+    </div>
+ </div>
+
+
+<!-- Delete Modal -->
+<partial name="_DeleteModal" />
+
+}

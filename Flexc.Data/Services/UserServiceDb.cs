@@ -265,6 +265,10 @@ namespace Flexc.Data.Services
         }
 
         // ----------------------- workout activities 
+            public IList<Workout> GetWorkouts()
+        {
+            return ctx.Workouts.Include(s=>s.Exersizes).ToList();
+        }
         
         public Workout GetWorkoutById(int id){
             return ctx.Workouts.Include(s=>s.Exersizes).FirstOrDefault(v => v.Id == id);
@@ -276,14 +280,14 @@ namespace Flexc.Data.Services
 
         
 
-        public Workout AddWorkout (   int id, string name, String Creator, string DateWorkout){
-            var exists = GetMealById(id);
+        public Workout AddWorkout (   int id, string name, string Creator, DateTime DateWorkout){
+            var exists = GetWorkoutById(id);
             if(exists != null )
             {
                 return null;
             }
 
-            var m = new Workout
+            var w = new Workout
             {
                 Id = id,
                 Name = name,
@@ -291,10 +295,11 @@ namespace Flexc.Data.Services
                 DateWorkout = DateTime.Now,
                
             };
-            ctx.Workouts.Add(m);
+            ctx.Workouts.Add(w);
             ctx.SaveChanges();
-            return m;
+            return w;
         }
+        
         public Workout UpdateWorkout(Workout updated)
         {
             var m = GetWorkoutById(updated.Id);
@@ -332,14 +337,19 @@ namespace Flexc.Data.Services
         }
 
          // ----------------------- Exersize activities 
+             public IList<Exersize> GetExersizes()
+        {
+            return ctx.Exersizes.Include(s=>s.Workout).ToList();
+        }
          public Exersize CreateExersize(int Id,string exName,string MuscleGroup,
-         int Reps, int Sets, string ExPhotoUrl){
+         int Reps, int Sets,int Weight, string ExPhotoUrl){
             var M = GetWorkoutById(Id);
             var f = new Exersize{
                 ExName = exName,
                 MuscleGroup = MuscleGroup,
                 Reps = Reps,
                 Sets = Sets,
+                Weight = Weight, 
                 ExPhotoUrl = ExPhotoUrl
             };
             M.Exersizes.Add(f);

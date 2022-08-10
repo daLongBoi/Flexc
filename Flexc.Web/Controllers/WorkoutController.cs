@@ -7,18 +7,17 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 using Flexc.Web.ViewModels;
 namespace Flexc.Web.Controllers;
 
 
-    public class MealController : BaseController
+    public class WorkoutController : BaseController
     {
                 private IUserService svc;
 
 
-                 public MealController(IUserService ss)
+                 public WorkoutController(IUserService ss)
             {
                 svc = ss;
             } 
@@ -38,12 +37,12 @@ namespace Flexc.Web.Controllers;
             //create on click action 
              // create /Vehicle/Post
              [HttpPost]
-             public IActionResult Create(Meal v)
+             public IActionResult Create(Workout v)
             {
                 
                 if (ModelState.IsValid)
                 {
-                    var vechile = svc.AddMeal(v.Id,v.Name,v.TotalCalories,v.PhotoUrl);
+                    var Workout = svc.AddWorkout(v.Id,v.Name,v.Creator,v.DateWorkout);
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -55,15 +54,15 @@ namespace Flexc.Web.Controllers;
             //get/Meals view
             public IActionResult Index(){
         
-            var Meals = svc.GetMeals();
-            return View(Meals);
+            var w = svc.GetWorkouts();
+            return View(w);
             }
 
 
             //get/ meal details 
             public IActionResult Details(int id)
             {
-                var v = svc.GetMealById(id);
+                var v = svc.GetWorkoutById(id);
                  if (v ==null)
                 {
                     Alert("Meal Not Found", AlertType.warning);
@@ -79,7 +78,7 @@ namespace Flexc.Web.Controllers;
             public IActionResult Edit(int id)
             {
                 //load the Vehicle using the service 
-                var v= svc.GetMealById(id);
+                var v= svc.GetWorkoutById(id);
 
                 // TBC check if s is null and return NotFound()
                 if (v ==null)
@@ -92,12 +91,12 @@ namespace Flexc.Web.Controllers;
 
             //POST /Vehicle/edit/{id}
             [HttpPost]
-            public IActionResult Edit(int Id, Meal v)
+            public IActionResult Edit(int Id, Workout v)
             {
                 //complete Post action to save meal changes
                 if(ModelState.IsValid)
                 {
-                var Maeal = svc.UpdateMeal(v);
+                var Vehicle = svc.UpdateWorkout(v);
 
                 return RedirectToAction(nameof(Index));  
                 }
@@ -109,7 +108,7 @@ namespace Flexc.Web.Controllers;
             public IActionResult Delete(int id)
             {
             //load the Vehicle using the service 
-                var v= svc.GetMealById(id);
+                var v= svc.GetWorkoutById(id);
                 if (v ==null)
                 {
                 // Alert($"Vehicle {id} not found",AlertType.warning);
@@ -126,7 +125,7 @@ namespace Flexc.Web.Controllers;
             public IActionResult DeleteConfirm(int id)
             {
                 //complete Post action to save vehicle changes
-                svc.DeleteMeal(id);
+                svc.DeleteWorkout(id);
                 // pass vehicle as parameter to the view
             return RedirectToAction(nameof(Index));
             }

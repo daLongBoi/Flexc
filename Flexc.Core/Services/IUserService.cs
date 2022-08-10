@@ -48,6 +48,7 @@ namespace Flexc.Core.Services
         public IList<Food> SearchFoods(string name, string query);
 
         //-------------------Workout management--------------------
+        public IList<Workout> GetWorkouts();
 
         public Workout GetWorkoutById(int id);
 
@@ -55,7 +56,7 @@ namespace Flexc.Core.Services
 
         
 
-        public Workout AddWorkout (   int id, string name, String Creator, string DateWorkout);
+        public Workout AddWorkout ( int id, string name, string Creator, DateTime DateWorkout);
         public Workout UpdateWorkout(Workout updated);
 
 
@@ -63,8 +64,9 @@ namespace Flexc.Core.Services
         public bool DeleteWorkout(int id);
 
          // ----------------------- Exersize activities 
+          public IList<Exersize> GetExersizes();
          public Exersize CreateExersize(int Id,string exName,string MuscleGroup,
-         int Reps, int Sets, string ExPhotoUrl);
+         int Reps, int Sets,int  weight ,string ExPhotoUrl);
     
         public bool DeleteExersize(int id);
         public Exersize GetExersizeById(int id);
