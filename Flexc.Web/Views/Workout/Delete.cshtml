@@ -1,4 +1,4 @@
-@model Meal
+@model Workout
 <partial name="_BreadCrumbs" model=@(new [] {
     ("/", "Home"),("/Vehicle", "Vehicle"),
     ("", "Delete")
@@ -12,24 +12,22 @@
                 <dt class="col-5">Id</dt>
             <dd class="col-7">@Model.Id</dd>
 
-             <dt class="col-5">Meal</dt>
+             <dt class="col-5">Workout Name</dt>
             <dd class="col-7">@Model.Name</dd>
 
             <dt class="col-5">Date/time</dt>
-            <dd class="col-7">@Model.DateMeal</dd>
+            <dd class="col-7">@Model.DateWorkout</dd>
             
-            <dt class="col-5">TotalCalories</dt>
-            <dd class="col-7">@Model.TotalCalories</dd>
+         
         </dl>
 <div>
     <!-- disply the vechile Id to be deleted using the Id -->
 
-    <form asp-action="DeleteConfim" asp-route-id=@Model.Id>
+    <form asp-action="DeleteConfirm" type="post">
         <input type="hidden" asp-for="Id" class="form-control"/>
 
-        <div class="form-group">
-            <input type="submit" value="Delete" class="btn btn-danger"/>
-            <a class="btn btn-secondary" asp-action="index"> Cancel</a>
-        </div>
+            <input type="submit" value="Confirm" class="btn btn-danger"/>
+            <a class="btn btn-secondary"asp-controller="Workout" asp-action="index"> Cancel</a>
+    
     </form>
 </div>

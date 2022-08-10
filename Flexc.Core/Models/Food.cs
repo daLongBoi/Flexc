@@ -14,6 +14,11 @@ namespace Flexc.Core.Models
         public int MealId { get; set;}
         public Meal Meal  {get; set; }
 
+         //forgien key
+        
+           public int UserId {get;set;}
+
+            public User User {get;set;}
       
 
     }

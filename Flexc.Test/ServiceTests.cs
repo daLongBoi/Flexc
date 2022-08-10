@@ -76,7 +76,7 @@ namespace Flexc.Test
         public void LoginWithInvalidCredentialsShouldNotWork()
         {
             // arrange
-            service.AddUser("admin", "admin@mail.com", "admin", Role.admin );
+            service.AddUser("admin", "admin@mail.com", "admin", Role.admin);
 
             // act      
             var user = service.Authenticate("admin@mail.com","xxx");
@@ -84,6 +84,18 @@ namespace Flexc.Test
             // assert
             Assert.Null(user);
            
+        }
+
+
+
+        [Fact]
+        public void AddworkoutAddAWorkout()
+        {
+            // Given
+        
+            // When
+        
+            // Then
         }
 
     }

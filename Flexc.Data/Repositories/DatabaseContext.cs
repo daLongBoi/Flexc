@@ -16,9 +16,12 @@ namespace Flexc.Data.Repositories
         public DbSet<Exersize> Exersizes { get; set;}
         public DbSet<Meal> Meals{get; set;}
 
+       
         public DbSet<Food> Foods { get; set;}
 
         public DbSet<Workout>Workouts { get; set; }
+        
+        public DbSet<Message>Messages {get; set;}
 
 
         // Configure the context to use Specified database. We are using 

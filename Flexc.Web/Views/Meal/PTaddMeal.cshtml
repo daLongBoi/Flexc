@@ -1,20 +1,20 @@
 @model Meal
 <partial name="_BreadCrumbs" model=@(new [] {
-    ("/", "Home"),("/Meal", "Meal"),
-    ("", "Create")
+    ("/", "Home"),("/User", "Meal"),
+    ("", "PTadd")
 })/>
-<h3 class="callout callout-info mt-4 mb-4">Create Meal</h3>
+<h3 class="callout callout-info mt-4 mb-4">Create Meal Plan</h3>
 
 <div class="card rounded shadow p-3">
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-          <!-- Name -->
-        <div  asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager")) class="mt-3">
+
+            <!-- AccountID -->
+        <div class="Mt-3">
             <label asp-for="UserId" class="form-label"></label>
-            <input asp-for="UserId" class="form-control"/>
+              <input asp-for="UserId" class="form-control"/>
             <span  asp-validation-for="UserId" class="text-danger"></span>
         </div>
-
         <!-- Name -->
         <div class="mt-3">
             <label asp-for="Name" class="form-label"></label>
@@ -44,7 +44,7 @@
 
         <div class="mt-3">
             <input type="submit" value="Create" class="btn btn-primary"/>
-            <a class="btn btn-secondary"asp-controller="Meal" asp-action="Index">Cancel</a>
+            <a class="btn btn-secondary"asp-controller="Vechile" asp-action="Index">Cancel</a>
         </div>
 
     </form>

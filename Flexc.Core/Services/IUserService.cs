@@ -19,6 +19,11 @@ namespace Flexc.Core.Services
         bool DeleteUser(int id);
         User Authenticate(string email, string password);
 
+       /*  public User AddworkoutPlan(int userId, int targetUserId);
+
+        public User AddMealPlan(int userId, int targetUserId);*/
+
+
 
         // ---------------- meals management --------------
 
@@ -30,13 +35,11 @@ namespace Flexc.Core.Services
 
         public Meal GetMealdate(DateTime date);
         
-
-        public Meal AddMeal (   int Id, string Name, int TotalCalories, string photoUrl);
+        public Meal AddMeal (int userId,   int Id, string Name, int TotalCalories, string photoUrl);
         public Meal UpdateMeal(Meal updated);
-
         public bool DeleteMeal(int id);
         // ---------------- food management --------------
-        public Food CreateFood(int mealId,string name,int weight,
+        public Food CreateFood(int UserId,int mealId,string name,int weight,
          int calories, string FoodPhotoUrl);
     
         public bool DeleteFood(int id);
@@ -56,16 +59,13 @@ namespace Flexc.Core.Services
 
         
 
-        public Workout AddWorkout ( int id, string name, string Creator, DateTime DateWorkout);
+        public Workout AddWorkout (int userId, int id, string name, string Creator, DateTime DateWorkout);
         public Workout UpdateWorkout(Workout updated);
-
-
-
         public bool DeleteWorkout(int id);
 
          // ----------------------- Exersize activities 
           public IList<Exersize> GetExersizes();
-         public Exersize CreateExersize(int Id,string exName,string MuscleGroup,
+         public Exersize CreateExersize(int UserId,int Id,string exName,string MuscleGroup,
          int Reps, int Sets,int  weight ,string ExPhotoUrl);
     
         public bool DeleteExersize(int id);
@@ -76,7 +76,15 @@ namespace Flexc.Core.Services
         public IList<Exersize> GetAllExersizes();
         public IList<Exersize> SearchExersizes(string name, string query);
 
-        
+
+  // ----------------------- Meassage activities 
+         Message CreateMessage(int UserId, string Name, string issue);
+        Message GetMessage(int id);
+        Message CloseMessage(int id, string resolution);
+        bool   DeleteMessage(int id);
+        IList<Message> GetAllMessage();
+        IList<Message> GetOpenMessage();        
+        IList<Message> SearchMessage(TicketRange range, string query);
         
        
 

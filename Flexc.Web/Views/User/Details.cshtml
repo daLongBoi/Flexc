@@ -1,0 +1,48 @@
+@model User
+<partial name="_BreadCrumbs" model=@(new [] {
+    ("/", "Home"),("/User", "User"),
+    ("", "Details")
+})/>
+    
+<h3 class="callout callout-info mt-4 mb-4">User Details</h3>
+<div class="row">
+    <!-- Details -->
+    <div class="col-8 card rounded shadow p-3">
+        <dl class="row">       
+            <dt class="col-5">Id</dt>
+            <dd class="col-7">@Model.Id</dd>
+
+             <dt class="col-5">Name</dt>
+            <dd class="col-7">@Model.Name</dd>
+
+            <dt class="col-5">Password</dt>
+            <dd class="col-7">@Model.Password</dd>
+            
+            <dt class="col-5">Role</dt>
+            <dd class="col-7">@Model.Role</dd>
+
+
+        <div class="mt-4">
+    <!-- add navigation link to redirect to Index action -->
+    <a asp-controller="User" asp-action="Index" class="btn btn-sm btn-primary" role="button">Home</a>
+    <!-- add navigation link to Details action, passing the correct route id parameter --> 
+    <a asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager") || User.IsInRole("user")) asp-controller="Meal" asp-action="Index" asp-route-id ="@Model.Id" class="btn btn-sm btn-secondary" role="button">Meals</a>
+    <!--add navigation link to create New Mot Record -->
+    <a asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager") || User.IsInRole("user")) asp-controller="Workout" asp-action="Index" asp-route-id ="@Model.Id" class="btn btn-sm btn-secondary" role="button">Workouts</a>
+  
+  
+    <a asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager") || User.IsInRole("user")) asp-controller="Message" asp-action="Index" asp-route-id ="@Model.Id" class="btn btn-sm btn-secondary" role="button">Message</a>
+     <!-- add navigation link to Delete action, passing the correct route id parameter --> 
+     <a asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager") || User.IsInRole("user")) asp-controller="User" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>Delete</a>
+        
+
+<!-- Tickets -->
+<div class="row pt-3">
+    <partial name="_Messages" />
+</div>
+    
+
+<!-- Delete Modal -->
+<partial name="_DeleteModal" />
+
+

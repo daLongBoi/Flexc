@@ -1,0 +1,42 @@
+@model User
+
+@if (Model.Messages.Count == 0)
+{
+    <h5>No tickets yet....</h5>
+}
+else
+{
+    <div class="card rounded shadow p-4">
+        <table class="table table-sm">
+            <thead>
+                <tr>           
+                    <th class="w-75">Ticket Issue</th>
+                    <th>Created</th>  
+                    <th>Active</th>       
+                    <th>Actions</th>  
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var t in Model.Messages) {
+                    <tr>              
+                        <td>@t.Context</td>
+                        <td>@t.CreatedOn</td>  
+                        <td>
+                            @if (@t.Active) 
+                            {
+                                <i class="bi bi-toggle-on"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-toggle-off"></i>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="TicketDelete" asp-route-id="@t.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></a>
+                        </td>             
+                    </tr>   
+                }
+            </tbody>
+        </table>
+    </div>
+}

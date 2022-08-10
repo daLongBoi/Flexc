@@ -1,0 +1,48 @@
+@model Message
+
+<!-- Breadcrumbs using partial view -->
+<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/Message", "Messages"), ("","Close") })>
+    
+<div class="col card rounded shadow-lg p-4">
+
+    <h3 class="mb-4">Message</h3>
+
+    <dl class="row">       
+        <dt class="col-4">Id</dt>
+        <dd class="col-8">@Model.Id</dd>
+
+        <dt class="col-4">Created On</dt>
+        <dd class="col-8">@Model.CreatedOn</dd>
+     
+        <dt class="col-4">Context</dt>
+        <dd class="col-8">@Model.Context</dd>
+         
+        <dt class="col-4">Created By</dt>
+        <dd class="col-8">@Model.User.Name</dd>
+   
+        <dt class="col-4">Resolved On</dt>
+        <dd class="col-8">
+            <span asp-condition=@(Model.Active)> 
+                Unresolved
+            </span>
+            <span asp-condition=@(!Model.Active)> 
+                @Model.RepliedOn
+            </span>
+        </dd>
+     
+        <dt class="col-4">Resolution</dt>
+        <dd class="col-8">@Model.resolution</dd>
+      
+    </dl>
+
+    <div class="mt-4">           
+        <button asp-condition=@(User.HasOneOfRoles("admin,manager")) disabled="@(!Model.Active)" 
+                data-bs-toggle="modal" data-bs-target="#closeTicketModal" class="btn btn-sm btn-danger">
+            <i class="bi bi-trash mr-1"></i>Close
+        </button>
+        <a class="btn btn-link" asp-action="Index">Cancel</a>
+    </div>
+
+</div> 
+
+<partial name="_CloseModal"/>

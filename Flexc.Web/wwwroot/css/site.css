@@ -16,3 +16,10 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.hero{
+  background-color: #074f57;
+  background-image: url("https://ibb.co/sRKqDSw");
+  color: white;
+}

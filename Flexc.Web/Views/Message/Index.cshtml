@@ -1,0 +1,40 @@
+@model MessageSearchViewModel
+Flexc.Web\ViewModels\MessageSearchViewModel.cs
+
+<partial name="_Breadcrumbs" model=@(new [] { ("/", "Home"), ("/Message", "Message"), ("","Search") })>
+<h3>Search Messages</h3>
+
+<div class="my-4 d-flex flex-row justify-content-between align-items-center">  
+   <a asp-action="Create" class="btn btn-primary btn-sm">Create Message</a>   
+   <partial name="_Search" /> <!-- add form to search ticket issues -->
+</div>
+
+<table class="table">
+    <thead>
+      <tr>
+         <th>Id</th>
+         <th>Person</th>        
+         <th>Created</th> 
+         <th>Context</th> 
+         <th>Active</th>   
+         <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach(var t in Model.Messages) {
+          <tr>
+            <td>@t.Id</td>
+            <td>@t.Name</td>
+            <td>@t.CreatedOn.ToShortDateString()</td>
+            <td>@t.Context.Substring(0, t.Context.Length < 20 ? t.Context.Length : 20) ...</td>
+            <td>
+               <i asp-condition="@t.Active"    class="bi bi-toggle-on"></i>
+               <i asp-condition="@(!t.Active)" class="bi bi-toggle-off"></i>  
+            </td>
+            <td>
+               <a asp-action="Details" asp-route-id="@t.Id"><i class="bi bi-lightbulb"></i> Details</a>                                          
+            </td>
+         </tr>
+      }
+    </tbody>
+</table>

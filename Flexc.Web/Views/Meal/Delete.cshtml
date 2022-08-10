@@ -24,12 +24,11 @@
 <div>
     <!-- disply the vechile Id to be deleted using the Id -->
 
-    <form asp-action="DeleteConfim" asp-route-id=@Model.Id>
-        <input type="hidden" asp-for="Id" class="form-control"/>
-
-        <div class="form-group">
-            <input type="submit" value="Delete" class="btn btn-danger"/>
+    <form asp-action="DeleteConfirm" type="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="UserId"/>
+       
+            <input type="submit" value="Confirm" class="btn btn-danger"/>
             <a class="btn btn-secondary" asp-action="index"> Cancel</a>
-        </div>
     </form>
 </div>

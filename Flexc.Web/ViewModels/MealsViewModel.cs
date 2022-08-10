@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Flexc.Web.ViewModels
 {
-    public class MealsViwModel
+    public class MealsViewModel
     {
         public SelectList Meals { set; get;}
         [Required]

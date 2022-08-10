@@ -11,7 +11,9 @@ namespace Flexc.Core.Models
         public string Name { get; set; }
         public string Creator { get; set; }
 
-        public string message {get;set;}
+        public string Context {get;set;}
+
+        public string resolution {get;set;}
          public DateTime MessageTime { get ; set;} = DateTime.Now;
 
           public DateTime CreatedOn { get; set; } = DateTime.Now;
@@ -21,6 +23,8 @@ namespace Flexc.Core.Models
 
         // ticket owned by a student
         public int UsersId { get; set; }      // foreign key
+
+        public User User {get; set;}// navigation property
         
        
         public Meal Meal { get; set; }    // navigation property

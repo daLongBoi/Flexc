@@ -20,6 +20,12 @@ namespace Flexc.Core.Models
          public List<Food> Foods {get; set;}
                          =new List<Food>();
 
+        //forgien key
+        
+           public int UserId {get;set;}
+
+            public User User {get;set;}
+
 
 
 

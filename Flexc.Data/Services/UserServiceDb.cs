@@ -31,7 +31,14 @@ namespace Flexc.Data.Services
         // Retrive User by Id 
         public User GetUser(int id)
         {
-            return ctx.Users.FirstOrDefault(s => s.Id == id);
+            return ctx.Users
+             .Include(s => s.Messages)
+              .Include(s=> s.Meals).ThenInclude(sm => sm.Foods)
+
+             .Include(s=> s.Workouts).ThenInclude(sm => sm.Exersizes)
+
+
+             .FirstOrDefault(s => s.Id == id);
         }
 
         // Add a new User checking a User with same email does not exist
@@ -48,7 +55,7 @@ namespace Flexc.Data.Services
                 Name = name,
                 Email = email,
                 Password = Hasher.CalculateHash(password), // can hash if required 
-                Role = role              
+                Role = role        
             };
             ctx.Users.Add(user);
             ctx.SaveChanges();
@@ -86,7 +93,8 @@ namespace Flexc.Data.Services
             User.Name = updated.Name;
             User.Email = updated.Email;
             User.Password = Hasher.CalculateHash(updated.Password);  
-            User.Role = updated.Role; 
+            User.Role = updated.Role;
+            User.PhotoUrl = updated.PhotoUrl; 
 
             ctx.SaveChanges();          
             return User;
@@ -120,8 +128,30 @@ namespace Flexc.Data.Services
         }
 
 
+       /* public User AddworkoutPlan(int userId, int targetUserId){
+
+           var Account =  GetUser(userId);
+           var targetAccount = GetUser(targetUserId);
+
+           targetAccount.WorkoutPlan = Account.Workouts;
 
 
+           ctx.SaveChanges();
+           return targetAccount;
+        }
+
+         public User AddMealPlan(int userId, int targetUserId){
+
+           var Account =  GetUser(userId);
+           var targetAccount = GetUser(targetUserId);
+
+          // targetAccount.MealPlan = Account.Meals;
+
+
+           ctx.SaveChanges();
+           return targetAccount;
+        }*/
+ 
 
         // meals methods ------------------------------------------
 
@@ -141,7 +171,9 @@ namespace Flexc.Data.Services
 
 
         public Meal GetMealById(int id){
-            return ctx.Meals.Include(s=>s.Foods).FirstOrDefault(v => v.Id == id);
+            
+            return ctx.Meals.Include(s=>s.User).ThenInclude(sm=>sm.Foods)
+            .FirstOrDefault(v => v.Id == id);
         }
 
         public Meal GetMealdate(DateTime date){
@@ -150,7 +182,8 @@ namespace Flexc.Data.Services
 
         
 
-        public Meal AddMeal (   int id, string name, int totalCalories, string photoUrl){
+        public Meal AddMeal (   int userId,int id, string name, int totalCalories, string photoUrl){
+             var M = GetUser(userId);
             var exists = GetMealById(id);
             if(exists != null )
             {
@@ -159,6 +192,7 @@ namespace Flexc.Data.Services
 
             var m = new Meal
             {
+                UserId = userId,
                 Id = id,
                 Name = name,
                 DateMeal = DateTime.Now,
@@ -185,6 +219,7 @@ namespace Flexc.Data.Services
             return m;
         }
 
+        
 
 
         public bool DeleteMeal(int id){
@@ -206,10 +241,11 @@ namespace Flexc.Data.Services
 
         
         // ---------------- food management --------------
-       public Food CreateFood(int mealId,string name,int weight,
+       public Food CreateFood(int UserId, int mealId,string name,int weight,
          int calories, string FoodPhotoUrl){
             var M = GetMealById(mealId);
             var f = new Food{
+                 UserId = UserId,
                 MealId = mealId,
                 Name = name,
                 Weight = weight,
@@ -269,6 +305,8 @@ namespace Flexc.Data.Services
         {
             return ctx.Workouts.Include(s=>s.Exersizes).ToList();
         }
+
+
         
         public Workout GetWorkoutById(int id){
             return ctx.Workouts.Include(s=>s.Exersizes).FirstOrDefault(v => v.Id == id);
@@ -280,7 +318,8 @@ namespace Flexc.Data.Services
 
         
 
-        public Workout AddWorkout (   int id, string name, string Creator, DateTime DateWorkout){
+        public Workout AddWorkout (  int userId, int id, string name, string Creator, DateTime DateWorkout){
+             var M = GetUser(userId);
             var exists = GetWorkoutById(id);
             if(exists != null )
             {
@@ -289,6 +328,7 @@ namespace Flexc.Data.Services
 
             var w = new Workout
             {
+                UserId = userId,
                 Id = id,
                 Name = name,
                 Creator = Creator,
@@ -299,6 +339,9 @@ namespace Flexc.Data.Services
             ctx.SaveChanges();
             return w;
         }
+
+
+        
         
         public Workout UpdateWorkout(Workout updated)
         {
@@ -316,8 +359,6 @@ namespace Flexc.Data.Services
             ctx.SaveChanges();
             return m;
         }
-
-
 
         public bool DeleteWorkout(int id){
         
@@ -341,10 +382,11 @@ namespace Flexc.Data.Services
         {
             return ctx.Exersizes.Include(s=>s.Workout).ToList();
         }
-         public Exersize CreateExersize(int Id,string exName,string MuscleGroup,
+         public Exersize CreateExersize(int UserId,int Id,string exName,string MuscleGroup,
          int Reps, int Sets,int Weight, string ExPhotoUrl){
             var M = GetWorkoutById(Id);
             var f = new Exersize{
+                UserId=UserId,
                 ExName = exName,
                 MuscleGroup = MuscleGroup,
                 Reps = Reps,
@@ -399,6 +441,87 @@ namespace Flexc.Data.Services
                             ).ToList();
             return  results;  
         }
-   
+
+         // ----------------------- Meassage activities 
+         public Message CreateMessage(int UserId,string name, string Context){
+            var user = GetUser(UserId);
+            if(user == null)return null;
+
+            var Message = new Message
+            {
+                Name =user.Name,
+                Context = Context,
+                UsersId = UserId,
+                CreatedOn = DateTime.Now,
+                Active = true,
+            };
+               ctx.Messages.Add(Message);
+            ctx.SaveChanges(); // write to database
+            return Message;
+
+
+         }
+       public Message GetMessage(int id){
+              return ctx.Messages
+                     .Include(t => t.User)
+                     .FirstOrDefault(t => t.Id == id);
+        }
+       public Message CloseMessage(int id, string resolution){
+             var message = GetMessage(id);
+            // if ticket does not exist or is already closed return null
+            if (message == null || !message.Active) return null;
+            
+            // ticket exists and is active so close
+            message.Active = false;
+            message.resolution = resolution;
+            message.RepliedOn = DateTime.Now;
+
+           
+            ctx.SaveChanges(); // write to database
+            return message;
+        }
+        
+        public bool  DeleteMessage(int id ){ // find ticket
+            var ticket = GetMessage(id);
+            if (ticket == null) return false;
+            
+            // remove ticket 
+            var result = ctx.Messages.Remove(ticket);
+            
+            ctx.SaveChanges();
+            return true;
+        }
+        public IList<Message> GetAllMessage(){
+                return ctx.Messages
+                     .Include(t => t.User)
+                     .ToList();
+        }
+        public IList<Message> GetOpenMessage(){
+            // return open tickets with associated students
+            return ctx.Messages
+                     .Include(t => t.User) 
+                     .Where(t => t.Active)
+                     .ToList();
+        }         
+        public IList<Message> SearchMessage(TicketRange range, string query){
+
+            // ensure query is not null    
+            query = query == null ? "" : query.ToLower();
+
+            // search ticket issue, active status and student name
+            var results = ctx.Messages
+                            .Include(t => t.User)
+                            .Where(t => (t.Context.ToLower().Contains(query) || 
+                                         t.User.Name.ToLower().Contains(query)
+                                        ) &&
+                                        (range == TicketRange.OPEN && t.Active ||
+                                         range == TicketRange.READ && !t.Active ||
+                                         range == TicketRange.ALL
+                                        ) 
+                            ).ToList();
+            return  results;
+
+        }
+       
     }
 }

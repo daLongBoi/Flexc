@@ -12,6 +12,13 @@ namespace Flexc.Core.Models
 
          public List<Exersize> Exersizes {get; set;}
                          =new List<Exersize>();
+        
+        //forgien key
+            public int UserId {get;set;}
+
+            public User User {get;set;}
+
+                         
 
 
 

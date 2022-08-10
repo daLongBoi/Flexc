@@ -25,10 +25,28 @@ namespace Flexc.Web.Controllers
             _svc = svc;
         }
 
+         public IActionResult Index()
+        {
+              var w = _svc.GetUsers();
+            return View(w);
+        }
 
         public IActionResult Login()
         {
             return View();
+        }
+
+         // GET/User/{id}
+        public IActionResult Details(int id)
+        {
+            var user = _svc.GetUser(id);
+            if (user == null)
+            {
+                Alert("User Not Found", AlertType.warning);  
+                return RedirectToAction(nameof(Index));             
+            }
+
+            return View(user);
         }
 
         [HttpPost]
@@ -59,7 +77,7 @@ namespace Flexc.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register([Bind("Name,Email,Password,PasswordConfirm,Role")] UserRegisterViewModel m)       
+        public IActionResult Register([Bind("Name,Email,Password,PasswordConfirm,Role,Photourl")] UserRegisterViewModel m)       
         {
             if (!ModelState.IsValid)
             {
@@ -212,5 +230,28 @@ namespace Flexc.Web.Controllers
                 AuthBuilder.BuildClaimsPrincipal(user)
             );
         }
+
+
+        public IActionResult ptaddMeal()
+        {
+           return View();
+            
+        }
+
+
+            //POST /Vehicle/edit/{id}
+           /* [HttpPost]
+            public IActionResult AddMealPlan(Meal v, int userId,int targetUserId)
+            {
+                //complete Post action to save meal changes
+                if(ModelState.IsValid)
+                {
+                var vMeal = _svc.AddMealPlan(userId, targetUserId);
+
+                return RedirectToAction(nameof(Index));  
+                }
+                // pass vehicle as parameter to the view
+                return View(v);
+            }*/
     }
 }

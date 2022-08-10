@@ -42,7 +42,7 @@ namespace Flexc.Web.Controllers;
                 
                 if (ModelState.IsValid)
                 {
-                    var Workout = svc.AddWorkout(v.Id,v.Name,v.Creator,v.DateWorkout);
+                    var Workout = svc.AddWorkout(v.UserId,v.Id,v.Name,v.Creator,v.DateWorkout);
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -59,7 +59,7 @@ namespace Flexc.Web.Controllers;
             }
 
 
-            //get/ meal details 
+            //get/ workout details 
             public IActionResult Details(int id)
             {
                 var v = svc.GetWorkoutById(id);
@@ -122,12 +122,15 @@ namespace Flexc.Web.Controllers;
             
             //POST /Vehicle/Delete/{id}
             [HttpPost]
-            public IActionResult DeleteConfirm(int id)
+            [Authorize(Roles="admin")]
+            [ValidateAntiForgeryToken]
+            public IActionResult DeleteConfirm(int id, int userId)
             {
-                //complete Post action to save vehicle changes
+                //complete Post action to save Workout changes
                 svc.DeleteWorkout(id);
-                // pass vehicle as parameter to the view
-            return RedirectToAction(nameof(Index));
+                // pass parameter to the view
+                Alert("Workout deleted successfully", AlertType.info);
+            return RedirectToAction(nameof(Details), new {Id = userId});
             }
 
 

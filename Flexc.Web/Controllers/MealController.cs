@@ -43,7 +43,7 @@ namespace Flexc.Web.Controllers;
                 
                 if (ModelState.IsValid)
                 {
-                    var vechile = svc.AddMeal(v.Id,v.Name,v.TotalCalories,v.PhotoUrl);
+                    var meal = svc.AddMeal(v.UserId,v.Id,v.Name,v.TotalCalories,v.PhotoUrl);
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -130,11 +130,6 @@ namespace Flexc.Web.Controllers;
                 // pass vehicle as parameter to the view
             return RedirectToAction(nameof(Index));
             }
-
-
-        
-
-
     }
 
 

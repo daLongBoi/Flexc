@@ -25,8 +25,15 @@ namespace Flexc.Core.Models
        
        
         // forgein key
+    
         public int workoutID{ get ; set;}
         public Workout Workout { get; set; }
+
+         //forgien key
+        
+           public int UserId {get;set;}
+
+            public User User {get;set;}
 
     }
 }
