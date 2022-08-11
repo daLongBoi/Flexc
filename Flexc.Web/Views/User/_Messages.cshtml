@@ -9,18 +9,23 @@ else
     <div class="card rounded shadow p-4">
         <table class="table table-sm">
             <thead>
-                <tr>           
-                    <th class="w-75">Ticket Issue</th>
+                <tr> 
+                     <th>Id</th>          
+                    <th>From</th>      
                     <th>Created</th>  
-                    <th>Active</th>       
+                    <th>Active</th>   
+                     <th class="w-75">Message Info</th>    
                     <th>Actions</th>  
                 </tr>
             </thead>
             <tbody>
                 @foreach(var t in Model.Messages) {
-                    <tr>              
-                        <td>@t.Context</td>
-                        <td>@t.CreatedOn</td>  
+                    <tr>
+                         <td>@t.Id</td>
+                         <td>@t.Name</td>
+                         <td>@t.CreatedOn.ToShortDateString()</td>
+                         <td>@t.Active</td>
+                         <td>@t.Context</td>
                         <td>
                             @if (@t.Active) 
                             {
@@ -32,7 +37,7 @@ else
                             }
                         </td>
                         <td>
-                            <a asp-action="TicketDelete" asp-route-id="@t.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></a>
+                            <a asp-action="MessageDelete" asp-route-id="@t.Id" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></a>
                         </td>             
                     </tr>   
                 }

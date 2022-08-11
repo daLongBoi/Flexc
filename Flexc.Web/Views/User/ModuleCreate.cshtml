@@ -1,0 +1,45 @@
+@model UserModuleViewModel
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Student" asp-action="Index">Students</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Student" asp-action="Details" asp-route-id=@Model.UserId>@Model.UserId</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add Module</li>
+    </ol>
+</nav>
+
+<h3 class="mt-4 mb-4">Add Module</h3>
+
+<form asp-action="ModuleCreate">
+    <input type="hidden" asp-for="UserId"/>  
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+   
+     <div class="form-group">
+        <label asp-for="ModuleId" class="control-label"></label>      
+        <select asp-for="ModuleId" class="form-control" 
+                asp-items="@Model.Modules"))">
+            <option>Select Module</option>
+        </select>
+        <span asp-validation-for="ModuleId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Mark" class="control-label"></label>      
+        <input asp-for="Mark" class="form-control"></textarea>
+        <span asp-validation-for="Mark" class="text-danger"></span>
+    </div>
+   
+
+    <div class="form-group">
+        <input type="submit" value="Add" class="btn btn-primary"/>
+        <a class="btn btn-secondary" asp-action="Details" asp-route-id=@Model.UserId>Cancel</a>
+    </div>
+
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

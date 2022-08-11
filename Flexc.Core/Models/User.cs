@@ -10,6 +10,7 @@ namespace Flexc.Core.Models
         public string Name { get; set; } = "";
 
         public int targetId {get;set;}
+        public int Grade {get;set;}
         
         
         public string Email { get; set; }
@@ -25,7 +26,8 @@ namespace Flexc.Core.Models
                         =new List<Workout>();
 
 
-       
+         // Relationship M:M Students - Modules
+        public IList<UserModule> UserModules {get; set;} = new List<UserModule>();
 
         public List<Meal> Meals {get; set;}
                         =new List<Meal>();

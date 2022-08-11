@@ -22,7 +22,7 @@ namespace Flexc.Core.Models
         public bool Active { get; set; } = true;
 
         // ticket owned by a student
-        public int UsersId { get; set; }      // foreign key
+        public int UserId { get; set; }      // foreign key
 
         public User User {get; set;}// navigation property
         

@@ -1,4 +1,4 @@
-﻿
+﻿@model User
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,19 +26,25 @@
                         <a class="nav-link text-dark" asp-controller="Home" asp-action="Secure">Secure</a>
                         <a class="nav-link text-dark" asp-controller="Meal" asp-action="Index">Meals</a>
                         <a class="nav-link text-dark" asp-controller="Workout" asp-action="Index">Workouts</a>
-                        <a class="nav-link text-dark" asp-controller="Message" asp-action="Index">Chat</a>
-
-
-
+                        <a class="nav-link text-dark" asp-controller="Message" asp-action="Index">Messages</a>
                         <a class="nav-link text-dark" asp-controller="User" asp-action="Index">Users</a>
-
-
-
-
-                         <a  asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager")) class="dropdown-item" asp-controller="Meal" asp-action="Create">Create Meal Plan</a>
-                         <a  asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager")) class="dropdown-item" asp-controller="Workout" asp-action="Create">Create Workout Plan</a>
                         </div>
-                    </div>         
+                    </div>  
+                              <!-- want to add a drop down for these options -->    
+                            <div class="nav-item dropdown">
+                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Create Plan
+                                            </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a   class="dropdown-item" asp-controller="Meal" asp-action="Create">Create Meal Plan</a>
+                                <a   class="dropdown-item" asp-controller="Workout" asp-action="Create">Create Workout Plan</a>
+                                </div>
+                            </div>
+
+    
+          
+   
 
                     <!-- AMC The login partial is added here for authentication flex-sm-row-reverse-->
                     <partial name="_LoginPartial" />      

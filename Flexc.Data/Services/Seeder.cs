@@ -113,7 +113,36 @@ namespace Flexc.Data.Services
             var ue8 = svc.CreateExersize(u5.Id,m1.Id,"Overhead Rope pulls","Tricep",10,4,30,"url");
             var ue9 = svc.CreateExersize(u5.Id,m1.Id,"Tricep pulldown","Tricep",10,4,20,"url");
 
-            var ms1 = svc.CreateMessage(u5.Id,u5.Name,"Hi insert name here, thefollowing workout has been recommended to you please find details below");
+            var ms1 = svc.CreateMessage(u5.Id,1,"client","Hi Admin, the following workout has been recommended to you please find details in your wokrouts section");
+            var ms2 = svc.CreateMessage(u1.Id,2,"trainer","Hi insert name here, thef ollowing workout has been recommended to you please find details below");
+
+
+
+
+             // create some modules
+            var G1 = svc.AddModule("Fatloss");
+            var G2 = svc.AddModule("Muscle Gain");
+            var G3 = svc.AddModule("General Fitness");
+
+
+
+             // Homer is taking programming
+            svc.AddUserToModule(u1.Id, m1.Id, 60);
+
+            // Marge is taking maths
+            svc.AddUserToModule(u2.Id, m2.Id, 72);
+
+            // Bart is taking English 
+            svc.AddUserToModule(u3.Id, m3.Id, 56);
+
+            // Lisa is taking Programming Maths and English
+            svc.AddUserToModule(u4.Id, m1.Id, 71);
+            svc.AddUserToModule(u4.Id, m2.Id, 79);
+            svc.AddUserToModule(u4.Id, m3.Id, 69);
+
+
+
+
         }
     }
 }

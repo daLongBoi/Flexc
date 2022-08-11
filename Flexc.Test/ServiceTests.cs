@@ -228,5 +228,32 @@ namespace Flexc.Test
 
 
 
+
+        [Fact]
+        public void MessageserviceTest()
+        {
+            // Given
+          var u4 = service.AddUser("admin", "admin@mail.com", "admin", Role.admin);
+
+            // When
+            var mes1 = service.CreateMessage(u4.Id,1,"name","blah blah blah");
+        
+            // Then
+            Assert.NotNull(mes1);
+
+            Assert.Equal(1,mes1.Id);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
 }

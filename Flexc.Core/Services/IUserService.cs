@@ -78,14 +78,22 @@ namespace Flexc.Core.Services
 
 
   // ----------------------- Meassage activities 
-         Message CreateMessage(int UserId, string Name, string issue);
+         Message CreateMessage(int UserId, int id,string name, string issue);
         Message GetMessage(int id);
         Message CloseMessage(int id, string resolution);
         bool   DeleteMessage(int id);
         IList<Message> GetAllMessage();
         IList<Message> GetOpenMessage();        
         IList<Message> SearchMessage(TicketRange range, string query);
-        
+
+
+     // -------------- Module Management -----------------
+        Module AddModule(string name);
+        UserModule AddUserToModule(int userId, int moduleId, int mark);
+        bool RemoveUserFromModule(int userId, int moduleId);
+        UserModule GetUserModule(int id);
+        IList<Module> GetAvailableModulesForUser(int id);
+        UserModule UpdateUserModuleMark(int userId, int moduleId, int mark);
        
 
 

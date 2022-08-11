@@ -3,7 +3,7 @@
 <partial name="_BreadCrumbs" model=@(new [] {
     ("/", "Home"),("/User", "User")
 })/>
-<h3 class="callout callout-info mt-4 mb-4">User List List</h3>
+<h3 class="callout callout-info mt-4 mb-4">User  List</h3>
 <a asp-condition=@(User.IsInRole("guest") || User.IsInRole("manager")) class="btn btn-sm btn-primary my-3" asp-action="Create" >
     <i class="bi bi-plus"></i> Create
 </a> 

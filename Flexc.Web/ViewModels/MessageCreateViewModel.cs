@@ -16,6 +16,8 @@ namespace Flexc.Web.ViewModels{
         [Display(Name = "Select User")]
         public int UserId { get; set; }
 
+        public int Id {get;set;}
+
         [Required]
 
         [StringLength(200, MinimumLength = 5)]

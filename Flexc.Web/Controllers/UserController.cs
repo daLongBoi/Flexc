@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Flexc.Core.Models;
 using Flexc.Core.Services;
 using Flexc.Web.ViewModels;
@@ -230,28 +230,154 @@ namespace Flexc.Web.Controllers
                 AuthBuilder.BuildClaimsPrincipal(user)
             );
         }
+        
 
+         public IActionResult MessageCreate(int id)
+        {     
+            var s = _svc.GetUser(id);
+            // check the returned student is not null and if so alert
+            if (s == null)
+            {
+                Alert($"User {id} not found", AlertType.warning);
+                return RedirectToAction(nameof(Index));
+            }
 
-        public IActionResult ptaddMeal()
-        {
-           return View();
-            
+            // create a ticket view model and set StudentId (foreign key)
+            var Message = new Message { UserId = id }; 
+
+            return View( Message );
         }
 
 
-            //POST /Vehicle/edit/{id}
-           /* [HttpPost]
-            public IActionResult AddMealPlan(Meal v, int userId,int targetUserId)
-            {
-                //complete Post action to save meal changes
-                if(ModelState.IsValid)
-                {
-                var vMeal = _svc.AddMealPlan(userId, targetUserId);
+         // POST /student/create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MessageCreate([Bind("userId, Context")] Message t)
+        {
+            if (ModelState.IsValid)
+            {                
+                var message = _svc.CreateMessage(t.UserId,t.Id,t.Name, t.Context);
+                Alert($"Ticket created successfully for student {t.UserId}", AlertType.info);
+                return RedirectToAction(nameof(Details), new { Id = message.UserId });
+            }
+            // redisplay the form for editing
+            return View(t);
+        }
 
-                return RedirectToAction(nameof(Index));  
+          //GET /Vehicle/Delete/{id}
+            public IActionResult MessageDelete(int id)
+            {
+            //load the Vehicle using the service 
+                var v= _svc.GetMessage(id);
+                if (v ==null)
+                {
+                // Alert($"Vehicle {id} not found",AlertType.warning);
+                    return RedirectToAction(nameof(Index));
                 }
                 // pass vehicle as parameter to the view
-                return View(v);
-            }*/
+                return View(v); 
+            }
+
+            //POST /Vehicle/Delete/{id}
+            [HttpPost]
+            public IActionResult MessageDeleteConfirm(int id)
+            {
+                //complete Post action to save vehicle changes
+                _svc.DeleteMessage(id);
+                // pass vehicle as parameter to the view
+            return RedirectToAction(nameof(Index));
+            }
+
+
+        /////////////////////////////////////////////////////
+        //module methods
+         // ============ User Module Management ===============
+    
+        // GET /student/moduleupdate/{id}
+        [Authorize(Roles = "admin,manager")]
+        public IActionResult ModuleUpdate(int id)
+        {
+            var sm = _svc.GetUserModule(id);  
+            if (sm == null)
+            {
+                Alert("Student Module Not Found", AlertType.warning);
+                return RedirectToAction(nameof(Details));
+            }
+            var vm = new UserModuleViewModel {
+                UserId = sm.UserId,
+                ModuleId = sm.ModuleId,
+                Mark = sm.Mark
+            };            
+            return View( vm );
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin,manager")]
+        [ValidateAntiForgeryToken]
+        public IActionResult ModuleUpdate([Bind("StudentId, ModuleId, Mark")] UserModuleViewModel sm)
+        {
+            if (ModelState.IsValid)
+            {                
+                _svc.UpdateUserModuleMark(sm.UserId, sm.ModuleId, sm.Mark);
+
+                return RedirectToAction(nameof(Details), new { Id = sm.UserId });
+            }
+            // redisplay the form for editing
+            return View(sm);
+        }
+
+        // GET /student/createmodule/{id}
+        [Authorize(Roles = "admin,manager")]
+        public IActionResult ModuleCreate(int id)
+        {
+            var sm = _svc.GetUser(id);  
+            if (sm == null)
+            {
+                Alert("StudentNot Found", AlertType.warning);
+                return RedirectToAction(nameof(Index));
+            }  
+            var modules = _svc.GetAvailableModulesForUser(id);  
+            var vm = new UserModuleViewModel {
+                Modules = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(modules,"Id","Title"),
+                UserId = id
+            };  
+            return View(vm);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin,manager")]
+        [ValidateAntiForgeryToken]
+        public IActionResult ModuleCreate([Bind("StudentId, ModuleId, Mark")] UserModuleViewModel sm)
+        {
+            if (ModelState.IsValid)
+            {                
+                _svc.AddUserToModule(sm.UserId, sm.ModuleId, sm.Mark);
+                _svc.UpdateUserModuleMark(sm.UserId, sm.ModuleId, sm.Mark);
+                return RedirectToAction(nameof(Details), new { Id = sm.UserId });
+            }
+            // redisplay the form for editing  
+            // note - we must re-create the selectlist and update view model Modules property
+            //        this is because the form does not retain the select list values when posted to server
+            var modules = _svc.GetAvailableModulesForUser(sm.UserId);
+            sm.Modules = new SelectList(modules,"Id","Title"); 
+            return View(sm);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin,manager")]
+        [ValidateAntiForgeryToken]
+        public IActionResult ModuleDelete(int id)
+        {
+            var sm = _svc.GetUserModule(id);
+            if (sm == null)
+            {
+                Alert("Student Modulet Found", AlertType.warning);
+                return RedirectToAction(nameof(Index));   
+            }   
+            
+            _svc.RemoveUserFromModule(sm.UserId,sm.ModuleId);
+            return RedirectToAction(nameof(Details), new { Id = sm.UserId });
+        }
+        
     }
 }

@@ -38,7 +38,7 @@
     <div class="mt-4">           
         <button asp-condition=@(User.HasOneOfRoles("admin,manager")) disabled="@(!Model.Active)" 
                 data-bs-toggle="modal" data-bs-target="#closeMessageModal" class="btn btn-sm btn-danger">
-            <i class="bi bi-trash mr-1"></i>Close
+            <i class="bi bi-trash mr-1"></i>Reply
         </button>
         <a class="btn btn-link" asp-action="Index">Cancel</a>
     </div>

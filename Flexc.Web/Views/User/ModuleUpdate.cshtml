@@ -1,0 +1,37 @@
+@model UserModuleViewModel
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Student" asp-action="Index">Users</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Student" asp-action="Details" asp-route-id=@Model.UserId>User @Model.UserId</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Change Module Mark</li>
+    </ol>
+</nav>
+
+<h3 class="mt-4 mb-4">Update Module Mark</h3>
+
+<form asp-action="ModuleUpdate">
+
+    <input type="hidden" asp-for="UserId"/>
+    <input type="hidden" asp-for="ModuleId"/>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+   
+    <div class="form-group">
+        <label asp-for="Mark" class="control-label"></label>      
+        <input asp-for="Mark" class="form-control"></textarea>
+        <span asp-validation-for="Mark" class="text-danger"></span>
+    </div>
+   
+    <div class="form-group">
+        <input type="submit" value="Update" class="btn btn-primary"/>
+        <a class="btn btn-secondary" asp-action="Details" asp-route-id=@Model.UserId>Cancel</a>
+    </div>
+
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -36,6 +36,7 @@ namespace Flexc.Data.Services
               .Include(s=> s.Meals).ThenInclude(sm => sm.Foods)
 
              .Include(s=> s.Workouts).ThenInclude(sm => sm.Exersizes)
+             .Include(s=> s.UserModules).ThenInclude(sv => sv.Module)
 
 
              .FirstOrDefault(s => s.Id == id);
@@ -443,15 +444,15 @@ namespace Flexc.Data.Services
         }
 
          // ----------------------- Meassage activities 
-         public Message CreateMessage(int UserId,string name, string Context){
+         public Message CreateMessage(int Id,int UserId, string name, string Context){
             var user = GetUser(UserId);
             if(user == null)return null;
 
             var Message = new Message
             {
-                Name =user.Name,
+                Name = name,
                 Context = Context,
-                UsersId = UserId,
+                UserId = UserId,
                 CreatedOn = DateTime.Now,
                 Active = true,
             };
@@ -473,7 +474,7 @@ namespace Flexc.Data.Services
             
             // ticket exists and is active so close
             message.Active = false;
-            message.resolution = resolution;
+            message.Resolution = resolution;
             message.RepliedOn = DateTime.Now;
 
            
@@ -521,6 +522,95 @@ namespace Flexc.Data.Services
                             ).ToList();
             return  results;
 
+        }
+
+          // ========================= Module Management ========================
+     
+        public Module AddModule(string title)
+        {
+            var m = new Module { Title = title };
+            ctx.Modules.Add(m);
+            ctx.SaveChanges();
+
+            return m;
+        }
+
+        public UserModule AddUserToModule(int userId, int moduleId, int mark)
+        {
+            // check if this User module already exists and return null if found
+            var sm = ctx.UserModules
+                       .FirstOrDefault(o => o.UserId == userId && 
+                                            o.ModuleId == moduleId);
+            if (sm != null)  {  return null;  }
+
+            // locate the User and the module
+            var s = ctx.Users.FirstOrDefault(s => s.Id == userId);
+            var m = ctx.Modules.FirstOrDefault(m => m.Id == moduleId);
+            // if either don't exist then return null
+            if (s == null || m == null) { return null;  }
+
+            // create the User module and add to database
+            var nsm = new UserModule { UserId = s.Id, ModuleId = m.Id, Mark = mark };
+            ctx.UserModules.Add(nsm);
+            ctx.SaveChanges();
+            return nsm;
+        }
+
+        public bool RemoveUserFromModule(int userId, int moduleId)
+        {
+            // check User is taking the module
+            var sm = ctx.UserModules.FirstOrDefault(
+                m => m.UserId == userId && m.ModuleId == moduleId
+            );
+            if (sm == null) {  return false;  }
+            
+            // remove the User module
+            ctx.UserModules.Remove(sm);
+            ctx.SaveChanges();
+            return true;
+        }
+        
+        public UserModule UpdateUserModuleMark(int userId, int moduleId, int mark)
+        {
+            var user = GetUser(userId);
+            // check the User exists
+            if (user == null)
+            {
+                return null; // no such User
+            }
+            var sm = user.UserModules.FirstOrDefault(o => o.ModuleId == moduleId);
+            if (sm == null)
+            {
+                return null; // no such User module
+            }
+
+            // update User module mark
+            sm.Mark = mark;
+
+            // calculate sum of module marks and count number of modules
+            var sum = user.UserModules.Sum(sm => sm.Mark);
+            var count = user.UserModules.Count();
+            var avg = count == 0 ? 0 : sum / count;
+
+            // set the User Profile Grade with average of module grades or 0 if no modules
+            user.Grade = avg; 
+
+            ctx.SaveChanges();
+            return sm;
+        }
+
+        public UserModule GetUserModule(int id)
+        {
+            return ctx.UserModules.FirstOrDefault(sm => sm.Id == id);
+        }
+
+        public IList<Module> GetAvailableModulesForUser(int id)
+        {
+            var user = GetUser(id);
+            var sm = user.UserModules.ToList();
+            var modules = ctx.Modules.ToList();
+            return modules.Where(m => sm.Any(x => x.ModuleId != m.Id)).ToList();
+            //return db.Modules.ToList();
         }
        
     }

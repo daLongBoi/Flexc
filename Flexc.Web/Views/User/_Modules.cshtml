@@ -1,0 +1,45 @@
+﻿@if (Model.StudentModules.Count == 0)
+{
+    <h5>No modules yet....</h5>
+}
+else
+{
+    <div class="card rounded shadow">
+    
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="w-75">Module</th>
+                    <th>Grade</th>
+                    <th>Actions</th> 
+                    @* <th style="width: 55%">Module</th>
+                    <th style="width: 25%">Grade</th>
+                    <th style="width: 20%">Actions</th> *@
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sm in Model.UserModules)
+                {
+                    <tr>
+                        <!-- Module.Title is accessible as we included studentmodules and each related module in service -->
+                        <td>@sm.Module.Title</td>
+                        <td>@sm.Mark</td> 
+                        <td> 
+                            <div class="d-inline-flex">
+                                <form asp-action="ModuleDelete" asp-route-id="@sm.Id" asp-condition=@(User.HasOneOfRoles("admin,manager"))>
+                                    <button class="btn btn-link p-0 m-0" type="submit">
+                                       <i class="bi bi-trash"></i>
+                                    </button>
+                                </form> 
+                                <a class="pl-2" asp-action="ModuleUpdate" asp-route-id="@sm.Id" asp-condition=@(User.HasOneOfRoles("admin,manager"))>
+                                    <i class="bi bi-pen"></i>
+                                </a>     
+                            </div>           
+                        </td>  
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

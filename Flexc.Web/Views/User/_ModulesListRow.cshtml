@@ -1,0 +1,25 @@
+<h5 asp-condition="@Model.UserModules.Count != 0">Modules</h5>
+<h5 asp-condition="@Model.UserModules.Count == 0">No modules yet....</h5>
+        
+<div class="d-flex flex-row align-items-center">                            
+    @foreach (var sm in Model.UserModules)
+    {
+        <div class="mx-4 badge bg-light text-dark d-flex flex-row justify-content-between align-items-center">
+            <div class="fs-6" >@sm.Module.Title <span class="badge bg-secondary">@sm.Mark</span></div>
+        
+            <div class="d-inline-flex ms-3">
+                <form asp-action="ModuleDelete" asp-route-id="@sm.Id" asp-condition=@(User.HasOneOfRoles("admin,manager"))>
+                    <button class="btn btn-link p-0 m-0" type="submit">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </form> 
+                <a class="px-2" asp-action="ModuleUpdate" asp-route-id="@sm.Id" asp-condition=@(User.HasOneOfRoles("admin,manager"))>
+                    <i class="bi bi-pen"></i>
+                </a>     
+            </div>
+        </div>
+    }  
+</div> 
+
+
+

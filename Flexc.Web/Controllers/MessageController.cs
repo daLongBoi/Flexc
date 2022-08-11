@@ -127,7 +127,7 @@ namespace Flexc.Web.Controllers;
                 
                 if (ModelState.IsValid)
                 {
-                    var message = svc.CreateMessage(v.UserId, v.Name,v.Context);
+                    var message = svc.CreateMessage(v.UserId,v.Id,v.Name,v.Context);
 
                     Alert($"Message Created", AlertType.info);
                     return RedirectToAction(nameof(Index));
