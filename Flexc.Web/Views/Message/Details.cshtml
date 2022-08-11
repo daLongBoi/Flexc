@@ -18,7 +18,7 @@
         <dd class="col-8">@Model.Context</dd>
          
         <dt class="col-4">Created By</dt>
-        <dd class="col-8">@Model.User.Name</dd>
+        <dd class="col-8">@Model.Name</dd>
    
         <dt class="col-4">Resolved On</dt>
         <dd class="col-8">
@@ -31,13 +31,13 @@
         </dd>
      
         <dt class="col-4">Resolution</dt>
-        <dd class="col-8">@Model.resolution</dd>
+        <dd class="col-8">@Model.Resolution</dd>
       
     </dl>
 
     <div class="mt-4">           
         <button asp-condition=@(User.HasOneOfRoles("admin,manager")) disabled="@(!Model.Active)" 
-                data-bs-toggle="modal" data-bs-target="#closeTicketModal" class="btn btn-sm btn-danger">
+                data-bs-toggle="modal" data-bs-target="#closeMessageModal" class="btn btn-sm btn-danger">
             <i class="bi bi-trash mr-1"></i>Close
         </button>
         <a class="btn btn-link" asp-action="Index">Cancel</a>

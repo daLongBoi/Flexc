@@ -37,6 +37,7 @@ namespace Flexc.Web.Controllers;
             //create on click action 
              // create /Vehicle/Post
              [HttpPost]
+              [ValidateAntiForgeryToken]
              public IActionResult Create(Workout v)
             {
                 

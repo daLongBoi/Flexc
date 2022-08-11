@@ -75,20 +75,20 @@ namespace Flexc.Web.Controllers;
         }
 
 
-        // POST /ticket/close/{id}
+        // POST /Message/close/{id}
         [HttpPost]
         [Authorize(Roles="admin,manager")]
         public IActionResult Close([Bind("Id, Resolution")] Message t)
         {
             // close ticket via service
-            var ticket = svc.CloseMessage(t.Id, t.Context);
-            if (ticket == null)
+            var Message = svc.CloseMessage(t.Id, t.Resolution);
+            if (Message == null)
             {
-                Alert("Ticket Not Found", AlertType.warning);                               
+                Alert("Message Not Found", AlertType.warning);                               
             }
             else
             {
-                Alert($"Ticket {t.Id } closed", AlertType.info);  
+                Alert($"Message {t.Id } closed", AlertType.info);  
             }
 
             // redirect to the index view
@@ -122,12 +122,14 @@ namespace Flexc.Web.Controllers;
             //create on click action 
              // create /Vehicle/Post
              [HttpPost]
-             public IActionResult Create(Message v)
+             public IActionResult Create(MessageCreateViewModel v)
             {
                 
                 if (ModelState.IsValid)
                 {
-                    var message = svc.CreateMessage(v.UsersId, v.Name,v.Context);
+                    var message = svc.CreateMessage(v.UserId, v.Name,v.Context);
+
+                    Alert($"Message Created", AlertType.info);
                     return RedirectToAction(nameof(Index));
                 }
 

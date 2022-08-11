@@ -17,8 +17,11 @@ namespace Flexc.Web.ViewModels{
         public int UserId { get; set; }
 
         [Required]
+
         [StringLength(200, MinimumLength = 5)]
         public string Context { get; set; }
+
+          public string Name {get;set;}
     }
 
 }

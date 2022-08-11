@@ -24,7 +24,7 @@
 <div>
     <!-- disply the vechile Id to be deleted using the Id -->
 
-    <form asp-action="DeleteConfirm" type="post">
+    <form asp-action="DeleteConfirm" asp-route-id=@Model.Id type="post">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="UserId"/>
        

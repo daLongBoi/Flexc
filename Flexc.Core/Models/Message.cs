@@ -13,7 +13,7 @@ namespace Flexc.Core.Models
 
         public string Context {get;set;}
 
-        public string resolution {get;set;}
+        public string Resolution {get;set;}
          public DateTime MessageTime { get ; set;} = DateTime.Now;
 
           public DateTime CreatedOn { get; set; } = DateTime.Now;
