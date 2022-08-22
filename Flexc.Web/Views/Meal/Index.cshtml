@@ -1,12 +1,11 @@
- 
 @model IList<Meal>
-<partial name="_BreadCrumbs" model=@(new [] {
-    ("/", "Home"),("/Meal", "Meal")
-})/>
+<partial name="_BreadCrumbs" model=@(new [] { ("/", "Home"),("/Meal", "Meal") }) />
 <h3 class="callout callout-info mt-4 mb-4">Meal List</h3>
-<a asp-condition=@(User.IsInRole("guest") || User.IsInRole("manager")) class="btn btn-sm btn-primary my-3" asp-action="Create" >
+<a asp-condition=@(User.IsInRole("guest") || User.IsInRole("admin")|| User.IsInRole("manager"))
+    class="btn btn-sm btn-primary my-3" asp-action="Create">
     <i class="bi bi-plus"></i> Create
-</a> 
+</a>
+
 
 <table class="table table-hover">
     <thead>
@@ -27,10 +26,12 @@
                 <td>@v.Name</td>
                 <td>@v.DateMeal</td>
                 <td>@v.TotalCalories</td>
-                <td>  <!-- Photo -->
-                 <img src="@v.PhotoUrl" class="img-thumbnail " style="width: 300px; height: 200px">
+                <td>
+                    <!-- Photo -->
+                <img src="@v.PhotoUrl" class="img-thumbnail " style="width: 300px; height: 200px">
                 </td>
-                    <td><a class= "btn btn-primary btn-lg active" asp-controller="Meal" asp-action="Details" asp-route-id="@v.Id">View</a>
+                <td><a class="btn btn-primary btn-lg active" asp-controller="Meal" asp-action="Details"
+                    asp-route-id="@v.Id">View</a>
                 </td>
             </tr>
         }

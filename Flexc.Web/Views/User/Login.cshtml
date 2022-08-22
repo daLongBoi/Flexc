@@ -1,10 +1,11 @@
 @model UserLoginViewModel
 
 <div class="card shadow p-4 mt-4">
-    
+
     <h3 class="mb-3">Login</h3>
-    
+
     <form asp-action="Login" method="post">
+        <img class="middle-image" src="~/assets/flexapplogowhite.jpeg" asp-controller="Home" asp-action="Index">
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 

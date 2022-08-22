@@ -1,34 +1,31 @@
 @model Meal
-<partial name="_BreadCrumbs" model=@(new [] {
-    ("/", "Home"),("/Vehicle", "Vehicle"),
-    ("", "Delete")
-})/>
+<partial name="_BreadCrumbs" model=@(new [] { ("/", "Home"),("/Meal", "Meal"), ("", "Delete") }) />
 
 <h3 class="callout callout-info mt-4 mb-4">Delete Meal</h3>
 
 <h4 class="mb-4">Are you sure you want to delete this Meal?</h4>
- <div class="col-8 card rounded shadow p-3">
-        <dl class="row">       
-                <dt class="col-5">Id</dt>
-            <dd class="col-7">@Model.Id</dd>
+<div class="col-8 card rounded shadow p-3">
+    <dl class="row">
+        <dt class="col-5">Id</dt>
+        <dd class="col-7">@Model.Id</dd>
 
-             <dt class="col-5">Meal</dt>
-            <dd class="col-7">@Model.Name</dd>
+        <dt class="col-5">Meal</dt>
+        <dd class="col-7">@Model.Name</dd>
 
-            <dt class="col-5">Date/time</dt>
-            <dd class="col-7">@Model.DateMeal</dd>
-            
-            <dt class="col-5">TotalCalories</dt>
-            <dd class="col-7">@Model.TotalCalories</dd>
-        </dl>
-<div>
-    <!-- disply the vechile Id to be deleted using the Id -->
+        <dt class="col-5">Date/time</dt>
+        <dd class="col-7">@Model.DateMeal</dd>
 
-    <form asp-action="DeleteConfirm" asp-route-id=@Model.Id type="post">
-        <input type="hidden" asp-for="Id" />
-        <input type="hidden" asp-for="UserId"/>
-       
-            <input type="submit" value="Confirm" class="btn btn-danger"/>
+        <dt class="col-5">TotalCalories</dt>
+        <dd class="col-7">@Model.TotalCalories</dd>
+    </dl>
+    <div>
+        <!-- disply the vechile Id to be deleted using the Id -->
+
+        <form asp-action="DeleteConfirm" asp-route-id=@Model.Id type="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UserId" />
+
+            <input type="submit" value="Confirm" class="btn btn-danger" />
             <a class="btn btn-secondary" asp-action="index"> Cancel</a>
-    </form>
-</div>
+        </form>
+    </div>

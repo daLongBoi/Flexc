@@ -13,13 +13,54 @@ html {
   min-height: 100%;
 }
 
+.footer {
+  vertical-align: middle;
+  align-items: center;
+  flex: 0;
+  margin-top: auto;
+
+}
+
 body {
   margin-bottom: 60px;
 }
 
+tr {
+  vertical-align: middle;
+}
 
-.hero{
-  background-color: #cdd4cd;
-  background-image: url("background-image:url(https://ibb.co/sRKqDSw)");
-  color: white;
+.carousel-item {
+  height: 500px;
+  width: auto !important;
+  max-width: 1296px;
+  object-fit: cover;
+
+}
+
+.icon-image {
+  height: 100px;
+  width: auto;
+}
+
+.middle-image {
+  height: 200px;
+  width: auto;
+  align-content: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+
+}
+
+.background-image1 {
+  background-image: url("~/assets/gym_background_black.jpg");
+  height: 100vh;
 }

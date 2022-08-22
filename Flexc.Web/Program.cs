@@ -6,6 +6,7 @@ using Flexc.Web.Hubs;
 
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 

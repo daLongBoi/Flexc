@@ -1,39 +1,73 @@
-﻿
-
-<Head>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+﻿<Head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
 
 </Head>
 
-<body> 
- <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-
+<body>
+    <div class="content-wrapper">
         <div class="text-center">
-            <h1 class="display-4">Welcome</h1>
-            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+            <h1 class="display-4">Welcome to Flex Fitness</h1>
+            <p>The best way to track your fitness goals. Newly updated for 2022 bodies program.</p>
         </div>
-    </div>
 
-        <!-- card is only visible when authorised - note use of asp-authorize -->
-        <div asp-authorize class="card">
-            <div class="card-body">
-                <h4 class="card-title">Authorized</h4>
-                <p class="card-text">This content is only visible if you are Authorized.</p>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="~/assets/gym.jpg" alt="Fitness Tracker">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="fw-bold">Workout Planner</h5>
+                        <p class="fw-bold">Check out our top standard workout Plans!</p>
+                    </div>
 
-                <!-- p elements are only rendered when user has specified role(s) -->
-                <p asp-roles="admin">This content is only visible if you are authenticated and have the <span class="text-primary">admin</span> role</p>
-                <p asp-roles="guest">This content is only visible if you are authenticated and have the <span class="text-danger">guest</span> role</p>
-                <p asp-roles="manager">This content is only visible if you are authenticated and have the <span class="text-danger">manager</span> role</p>
-                <p asp-roles="admin,manager">This content is visible if you have the <span class="text-danger">admin or manager</span> roles</p>
-                
-
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="~/assets/chicken.jpg" alt="Meals">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="fw-bold">Meal Diary</h5>
+                        <p class="fw-bold">Access your Meal Diary</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="~/assets/book.jpg" alt="Plans">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="fw-bold">View your Plans</h5>
+                        <p class="fw-bold">Click here to track your progress</p>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
+
+
+
+            <!-- card is only visible when authorised - note use of asp-authorize -->
+            <div asp-authorize class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Authorized</h4>
+                    <p class="card-text">Authorization Confirmed please enjoy Flex. </p>
+
+                    <!-- p elements are only rendered when user has specified role(s) -->
+                    <p asp-roles="admin">You have logged in as the :<span class="text-primary"> Admin</span> role</p>
+                    <p asp-roles="guest">You have logged in as the :<span class="text-danger"> Guest</span> role</p>
+                    <p asp-roles="manager">You have logged in as the :<span class="text-danger"> Manager</span> role</p>
+                    <p asp-roles="user">You have logged in as the :<span class="text-danger"> User</span> role</p>
+
+
+                </div>
+            </div>
+
         </div>
-
-    </div>
-
 </body>
-
-

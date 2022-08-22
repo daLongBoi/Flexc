@@ -1,6 +1,6 @@
-﻿@model User
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,54 +8,71 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Flexc.Web.styles.css" asp-append-version="true" />
-    
+
+
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">FLEX</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+
+                <img class="icon-image" src="~/assets/flexapplogowhite.jpeg" asp-controller="Home" asp-action="Index">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex" id="navbarNavAltMarkup">
-                                       
+
                     <div class="navbar-nav flex-grow-1">
+
                         <a class="nav-link text-dark active" asp-controller="Home" asp-action="Index">Home</a>
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>    
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         <a class="nav-link text-dark" asp-controller="Home" asp-action="Secure">Secure</a>
-                        <a class="nav-link text-dark" asp-controller="Meal" asp-action="Index">Meals</a>
-                        <a class="nav-link text-dark" asp-controller="Workout" asp-action="Index">Workouts</a>
-                        <a class="nav-link text-dark" asp-controller="Message" asp-action="Index">Messages</a>
-                        <a class="nav-link text-dark" asp-controller="User" asp-action="Index">Users</a>
-                        </div>
-                    </div>  
-                              <!-- want to add a drop down for these options -->    
-                            <div class="nav-item dropdown">
-                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Create Plan
-                                            </a>
-
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a   class="dropdown-item" asp-controller="Meal" asp-action="Create">Create Meal Plan</a>
-                                <a   class="dropdown-item" asp-controller="Workout" asp-action="Create">Create Workout Plan</a>
-                                </div>
-                            </div>
-
-    
-          
-   
-
-                    <!-- AMC The login partial is added here for authentication flex-sm-row-reverse-->
-                    <partial name="_LoginPartial" />      
-                    
+                        <a asp-condition=@User.HasOneOfRoles("admin,manager,user") class="nav-link text-dark"
+                            asp-controller="Calender" asp-action="Calender">Calender</a>
+                        <a asp-condition=@User.HasOneOfRoles("admin,manager,user") class="nav-link text-dark"
+                            asp-controller="Home" asp-action="Chat">Live Chat</a>
+                        <a asp-condition=@User.HasOneOfRoles("admin,manager,user") class="nav-link text-dark"
+                            asp-controller="Meal" asp-action="Index">Meals</a>
+                        <a asp-condition=@User.HasOneOfRoles("admin,manager,user") class="nav-link text-dark"
+                            asp-controller="Workout" asp-action="Index">Workouts</a>
+                        <a asp-condition=@User.HasOneOfRoles("admin,manager,user") class="nav-link text-dark"
+                            asp-controller="Message" asp-action="Index">Messages</a>
+                        <a asp-condition=@User.HasOneOfRoles("admin,manager") class="nav-link text-dark"
+                            asp-controller="User" asp-action="Index">Users</a>
+                    </div>
                 </div>
+                <!-- want to add a drop down for these options -->
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Create Plan
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" asp-condition=@User.HasOneOfRoles("admin,manager")
+                            asp-controller="Meal" asp-action="Create">Create Meal Plan</a>
+                        <a class="dropdown-item" asp-condition=@User.HasOneOfRoles("admin,manager")
+                            asp-controller="Workout" asp-action="Create">Create Workout Plan</a>
+                    </div>
+                </div>
+
+
+
+
+
+                <!-- AMC The login partial is added here for authentication flex-sm-row-reverse-->
+                <partial name="_LoginPartial" />
+
+            </div>
             </div>
         </nav>
     </header>
 
     <div class="container">
-        
+
         <!-- AMC Any alert defined in controller is rendered here -->
         <partial name="_Alert" />
 
@@ -64,14 +81,130 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - Sample.Web - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start bg-light text-muted">
+        <!-- Section: Social media -->
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            <!-- Left -->
+            <div class="me-5 d-none d-lg-block">
+                <span>Get connected with us on social networks:</span>
+            </div>
+            <!-- Left -->
+
+            <!-- Right -->
+            <div>
+                <a href="https://www.facebook.com/?stype=lo&jlou=AfddkS8IwCDjame4BuCtpqu6kbS6FGRC6j-oPQsno0I9RUb-3pOeRsCdyMjIL-0pQTpciQyOfKqx0MtAOXEteglOFmnPXzASfGWm-e6mQbsgSA&smuh=40144&lh=Ac_SjmyJ1Mhi5f28wXY" class="me-4 text-reset">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#!" class="me-4 text-reset">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#!" class="me-4 text-reset">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a href="#!" class="me-4 text-reset">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#!" class="me-4 text-reset">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#!" class="me-4 text-reset">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+            <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
+
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <i class="fas fa-gem me-3"></i>Flex App
+                        </h6>
+                        <p>
+                            We care about your thoughts so feel free to contact us about any ideas you have for Flex app.
+                            also if you feel like referring a friend to Flexapp we will offer you a free subcription to Flex PT.
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Products
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset">Angular</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">React</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Vue</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Laravel</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Useful links
+                        </h6>
+                        <p>
+                            <a href="#!" class="text-reset">Pricing</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Settings</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Orders</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-reset">Help</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                        <p><i class="fas fa-home me-3"></i> Belfast, BT9 5AS, Northern Ireland</p>
+                        <p>
+                            <i class="fas fa-envelope me-3"></i>
+                            info@Flexapp.com
+                        </p>
+                        <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                        <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            Copyright: &copy; @DateTime.Now.Year - Flex.Web - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
 </body>
+
+
 </html>

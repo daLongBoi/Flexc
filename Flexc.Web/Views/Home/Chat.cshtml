@@ -1,12 +1,14 @@
 @page
+<partial name="_BreadCrumbs" model=@(new [] { ("/", "Home"),("/Home", "Chat") }) />
+
     <div class="container">
         <div class="row">&nbsp;</div>
         <div class="row">
-            <div class="col-2">User</div>
+            <div class="col-2">User:</div>
             <div class="col-4"><input type="text" id="userInput" /></div>
         </div>
         <div class="row">
-            <div class="col-2">Message</div>
+            <div class="col-2">Message: </div>
             <div class="col-4"><input type="text" id="messageInput" /></div>
         </div>
         <div class="row">&nbsp;</div>
@@ -26,5 +28,8 @@
             <ul id="messagesList"></ul>
         </div>
     </div>
+<img class="d-block w-100" src="~/assets/gym_background_black.jpg" alt="Fitness Tracker">
+
+
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>

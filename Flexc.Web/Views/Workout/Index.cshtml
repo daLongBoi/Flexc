@@ -1,34 +1,47 @@
- 
-@model IList<Workout>
-<partial name="_BreadCrumbs" model=@(new [] {
-    ("/", "Home"),("/Workout", "Workout")
-})/>
-<h3 class="callout callout-info mt-4 mb-4">Workout List</h3>
-<a asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager") || User.IsInRole("user")) class="btn btn-sm btn-primary my-3" asp-action="Create" >
-    <i class="bi bi-plus"></i> Create
-</a> 
+<Head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Creator</th>
-            <th>Date of Workout</th>
-            <th>view</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var v in Model)
-        {
-            <tr>
-                <td>@v.Id</td>
-                <td>@v.Name</td>
-                <td>@v.Creator</td>
-                <td>@v.DateWorkout</td>
-                    <td><a class= "btn btn-primary btn-lg active" asp-controller="Workout" asp-action="Details" asp-route-id="@v.Id">View</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+</Head>
+
+<body>
+    @model IList<Workout>
+    <partial name="_BreadCrumbs" model=@(new [] { ("/", "Home"),("/Workout", "Workout") }) />
+    <h3 class="callout callout-info mt-4 mb-4">Workout List</h3>
+    <a asp-condition=@(User.IsInRole("admin") || User.IsInRole("manager") || User.IsInRole("user"))
+        class="btn btn-sm btn-primary my-3" asp-action="Create">
+        <i class="bi bi-plus"></i> Create
+    </a>
+    <div class="background-image1">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Creator</th>
+                    <th>Date of Workout</th>
+                    <th>view</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var v in Model)
+                {
+                    <tr>
+                        <td>@v.Id</td>
+                        <td>@v.Name</td>
+                        <td>@v.Creator</td>
+                        <td>@v.DateWorkout</td>
+                        <td><a class="btn btn-primary btn-lg active" asp-controller="Workout" asp-action="Details"
+                            asp-route-id="@v.Id">View</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+</body>

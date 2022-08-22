@@ -264,7 +264,7 @@ namespace Flexc.Web.Controllers
             return View(t);
         }
 
-          //GET /Vehicle/Delete/{id}
+          //GET /Message/Delete/{id}
             public IActionResult MessageDelete(int id)
             {
             //load the Vehicle using the service 
@@ -378,6 +378,113 @@ namespace Flexc.Web.Controllers
             _svc.RemoveUserFromModule(sm.UserId,sm.ModuleId);
             return RedirectToAction(nameof(Details), new { Id = sm.UserId });
         }
+
+
+
+
+            //launches create view
+             public IActionResult MealCreate()
+            {
+            // display blank form to create a vehicle
+                return View();
+            }
+
+
+
+            //create on click action 
+             // create /Vehicle/Post
+             [HttpPost]
+             public IActionResult MealCreate(Meal v)
+            {
+                
+                if (ModelState.IsValid)
+                {
+                    var meal = _svc.AddMeal(v.UserId,v.Id,v.Name,v.TotalCalories,v.PhotoUrl);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                //redisplay the form for editing as there are errors
+                return View(v);
+            }
+            
+
+            //get/Meals view
+            public IActionResult MealIndex(){
         
+            var Meals = _svc.GetMeals();
+            return View(Meals);
+            }
+
+
+            //get/ meal details 
+            public IActionResult MealDetails(int id)
+            {
+                var v = _svc.GetMealById(id);
+                 if (v ==null)
+                {
+                    Alert("Meal Not Found", AlertType.warning);
+                    return NotFound();
+                }
+
+                // pass Vehicle as parameter to the view
+                return View(v);
+            }
+
+            //GET /Vehicle/edit/{id}
+
+            public IActionResult MealEdit(int id)
+            {
+                //load the Vehicle using the service 
+                var v= _svc.GetMealById(id);
+
+                // TBC check if s is null and return NotFound()
+                if (v ==null)
+                {
+                    return NotFound();
+                }
+                // pass Meal as parameter to the view
+                return View(v);
+            }
+
+            //POST /Vehicle/edit/{id}
+            [HttpPost]
+            public IActionResult MealEdit(int Id, Meal v)
+            {
+                //complete Post action to save meal changes
+                if(ModelState.IsValid)
+                {
+                var Maeal = _svc.UpdateMeal(v);
+
+                return RedirectToAction(nameof(Index));  
+                }
+                // pass vehicle as parameter to the view
+                return View(v);
+            }
+
+             //GET /Vehicle/Delete/{id}
+            public IActionResult MealDelete(int id)
+            {
+            //load the Vehicle using the service 
+                var v= _svc.GetMealById(id);
+                if (v ==null)
+                {
+                // Alert($"Vehicle {id} not found",AlertType.warning);
+                    return RedirectToAction(nameof(Index));
+                }
+                // pass vehicle as parameter to the view
+                return View(v); 
+            }
+
+
+            
+            //POST /Vehicle/Delete/{id}
+            [HttpPost]
+            public IActionResult MealDeleteConfirm(int id)
+            {
+                //complete Post action to save vehicle changes
+                _svc.DeleteMeal(id);
+                // pass vehicle as parameter to the view
+            return RedirectToAction(nameof(Index));
+            }  
     }
 }
